@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "ES2015",
+        "experimentalDecorators": true,
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "outDir": "dist",
+        "declaration": true
+    },
+    "include": [
+        "lib/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

@@ -1,12 +1,12 @@
 {
   "name": "@kontest/gamelift-pb",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "NodeJS addon for Protocol Buffer objects used in AWS Gamelift",
   "main": "dist/index.js",
   "scripts": {
     "prepublish": "npm run build",
     "build": "tsc",
-    "build:test": "cmake-js build --target gamelift-pb-wire-test",
+    "build:test": "cmake-js build --target gamelift-pb-wire-test --cmake-path \"$CMAKE_PATH\"",
     "pretest": "npm run build:test",
     "test": "mocha",
     "docs": "typedoc --options typedoc.json --stripInternal",
@@ -25,6 +25,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/therealsamf/gamelift-pb.git"
+  },
+  "publishConfig": {
+      "access": "public"
   },
   "author": "therealsamf",
   "license": "MIT",

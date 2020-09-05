@@ -1,0 +1,23 @@
+
+dist: bionic
+language: node_js
+node_js:
+  - 12
+before_install:
+- sudo apt-get -y install apt-transport-https ca-certificates gnupg software-properties-common
+  wget
+- wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null |
+  gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
+- sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
+- sudo apt-get -y update
+- sudo apt-get -y install g++ cmake zlib1g-dev
+addons:
+  apt:
+    update: true
+deploy:
+  provider: npm
+  email: therealsamf@hotmail.com
+  on:
+    tags: true
+  api_key:
+    secure: Rglz7LxhQwvKVWEsqo0S7HMEmBBM7lJ59A61SOoCfxSqpDgW0mFq6L8FGcE6hkZYyU1OtC4LUkARTAtigGhH7k4ZXjh4sRgmPMyxyEAejq8AKlOUDTX7p539Kmk5ABd6wlpkKYnpz0EkR4BulMpW7n89F0Czd9FyVJ7F6uHEv9RBdRUZdAQ6RsPRmk7p4NmWYCLh5uP077/SOib54ou3Mi4+wPqEs3YhQLbrfhwvQRD9wXPhxavuKZJ5l3/zzZYHW/wi6XBlallyNO6Rm0ipjv+YOSvE4HoA+e8hnx+rAeBwiL9DqqeognRcJZ2wYMOGDM3AhEJ0vrEQrtC5BBMry7kXUnx930NjtQ/uG4g6jF9wvuc1JnK+YxaZd0L5t1SwG+HTdKihtTDNNNNq0npaLJty13d0jg5dV3a3d3dn/ylBmfGuTgOUshHia9mCqYK8c2xBs3/GW4KB91KCAgwJFc3wgz0Dow7U+BZcLNQUuOl0vtDxAyHOYmloxm2EvQn3ZSt8BBkz9/6AscF6vZnQEgFyN59rhtRPMsoj/Ke/zoOVxYqrnpU0DUN3Lidvc9/iLlQlQvsEVDcFJZqdDo42E0n2y08dMrblayZv4paBcL/7vGIpyve6iHGZHZMjbmVEfD9SgoW3FqNOcU+lfXDI0gaLBHEBBWHaPyexIfwUAM4=

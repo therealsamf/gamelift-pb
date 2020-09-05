@@ -1,10 +1,10 @@
 {
   "name": "@kontest/gamelift-pb",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "NodeJS addon for Protocol Buffer objects used in AWS Gamelift",
   "main": "dist/index.js",
   "scripts": {
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "clean": "rimraf dist/",
     "build": "npm run clean && tsc",
     "build:test": "npm run clean && npm run build && cmake-js build --target gamelift-pb-wire-test --cmake-path \"$CMAKE_PATH\"",

@@ -14,6 +14,17 @@ before_install:
 addons:
   apt:
     update: true
+
+script:
+  - npm install -g codecov
+  - npm run lint
+  - npm run test
+  - npm run coverage
+  - npm run coverage:report
+
+after_success:
+  - codecov
+
 deploy:
   provider: npm
   email: therealsamf@hotmail.com

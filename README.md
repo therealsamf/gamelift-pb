@@ -1,6 +1,11 @@
 gamelift-pb
 ===========
 
+[![Build Status](https://travis-ci.org/therealsamf/gamelift-pb.svg?branch=master)](https://travis-ci.org/therealsamf/gamelift-pb)
+[![codecov](https://codecov.io/gh/therealsamf/gamelift-pb/branch/master/graph/badge.svg)](https://codecov.io/gh/therealsamf/gamelift-pb)
+[![Known Vulnerabilities](https://snyk.io/test/github/therealsamf/gamelift-pb/badge.svg)](https://snyk.io/test/github/therealsamf/gamelift-pb)
+
+
 [Protocol Buffer] messages used in the [AWS GameLift] Server SDK usable in a NodeJS environment.
 
 This library enables communication between a NodeJS process and the AWS GameLift service.

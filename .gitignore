@@ -1045,3 +1045,7 @@ dist/
 
 # Generated Typedoc documentation
 docs/
+
+# Generated NYC output
+.nyc_output/
+coverage/

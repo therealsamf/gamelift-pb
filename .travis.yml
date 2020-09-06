@@ -1,35 +1,76 @@
 
-dist: bionic
-language: node_js
 node_js:
   - 12
-before_install:
-- sudo apt-get -y install apt-transport-https ca-certificates gnupg software-properties-common
-  wget
-- wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null |
-  gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
-- sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
-- sudo apt-get -y update
-- sudo apt-get -y install g++ cmake zlib1g-dev
-addons:
-  apt:
-    update: true
 
-script:
-  - npm install -g codecov
-  - npm run lint
-  - npm run test
-  - npm run coverage
-  - npm run coverage:report
+jobs:
+  include:
+    - stage: default
+      dist: bionic
+      language: node_js
+      before_install:
+        - sudo apt-get -y install apt-transport-https ca-certificates gnupg software-properties-common wget
+        - wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null |
+        gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
+        - sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
+        - sudo apt-get -y update
+        - sudo apt-get -y install g++ cmake zlib1g-dev
+        - npm install -g codecov
+      addons:
+        apt:
+          update: true
 
-after_success:
-  - codecov
+      script:
+        - npm run lint
+        - npm run test
+        - npm run coverage
+        - npm run coverage:report
 
-deploy:
-  provider: npm
-  email: therealsamf@hotmail.com
-  on:
-    tags: true
-  api_key:
-    secure: Rglz7LxhQwvKVWEsqo0S7HMEmBBM7lJ59A61SOoCfxSqpDgW0mFq6L8FGcE6hkZYyU1OtC4LUkARTAtigGhH7k4ZXjh4sRgmPMyxyEAejq8AKlOUDTX7p539Kmk5ABd6wlpkKYnpz0EkR4BulMpW7n89F0Czd9FyVJ7F6uHEv9RBdRUZdAQ6RsPRmk7p4NmWYCLh5uP077/SOib54ou3Mi4+wPqEs3YhQLbrfhwvQRD9wXPhxavuKZJ5l3/zzZYHW/wi6XBlallyNO6Rm0ipjv+YOSvE4HoA+e8hnx+rAeBwiL9DqqeognRcJZ2wYMOGDM3AhEJ0vrEQrtC5BBMry7kXUnx930NjtQ/uG4g6jF9wvuc1JnK+YxaZd0L5t1SwG+HTdKihtTDNNNNq0npaLJty13d0jg5dV3a3d3dn/ylBmfGuTgOUshHia9mCqYK8c2xBs3/GW4KB91KCAgwJFc3wgz0Dow7U+BZcLNQUuOl0vtDxAyHOYmloxm2EvQn3ZSt8BBkz9/6AscF6vZnQEgFyN59rhtRPMsoj/Ke/zoOVxYqrnpU0DUN3Lidvc9/iLlQlQvsEVDcFJZqdDo42E0n2y08dMrblayZv4paBcL/7vGIpyve6iHGZHZMjbmVEfD9SgoW3FqNOcU+lfXDI0gaLBHEBBWHaPyexIfwUAM4=
-  skip_cleanup: true
+      after_success:
+        - codecov
+
+      deploy:
+        provider: npm
+        email: therealsamf@hotmail.com
+        on:
+          tags: true
+        api_key:
+          secure: Rglz7LxhQwvKVWEsqo0S7HMEmBBM7lJ59A61SOoCfxSqpDgW0mFq6L8FGcE6hkZYyU1OtC4LUkARTAtigGhH7k4ZXjh4sRgmPMyxyEAejq8AKlOUDTX7p539Kmk5ABd6wlpkKYnpz0EkR4BulMpW7n89F0Czd9FyVJ7F6uHEv9RBdRUZdAQ6RsPRmk7p4NmWYCLh5uP077/SOib54ou3Mi4+wPqEs3YhQLbrfhwvQRD9wXPhxavuKZJ5l3/zzZYHW/wi6XBlallyNO6Rm0ipjv+YOSvE4HoA+e8hnx+rAeBwiL9DqqeognRcJZ2wYMOGDM3AhEJ0vrEQrtC5BBMry7kXUnx930NjtQ/uG4g6jF9wvuc1JnK+YxaZd0L5t1SwG+HTdKihtTDNNNNq0npaLJty13d0jg5dV3a3d3dn/ylBmfGuTgOUshHia9mCqYK8c2xBs3/GW4KB91KCAgwJFc3wgz0Dow7U+BZcLNQUuOl0vtDxAyHOYmloxm2EvQn3ZSt8BBkz9/6AscF6vZnQEgFyN59rhtRPMsoj/Ke/zoOVxYqrnpU0DUN3Lidvc9/iLlQlQvsEVDcFJZqdDo42E0n2y08dMrblayZv4paBcL/7vGIpyve6iHGZHZMjbmVEfD9SgoW3FqNOcU+lfXDI0gaLBHEBBWHaPyexIfwUAM4=
+        skip_cleanup: true
+    - stage: docs
+      if: tag IS present
+      dist: bionic
+      language: node_js
+      before_install:
+        # Install JQ for JSON parsing
+        - sudo apt-get install -y jq
+        # Install terraform
+        - sudo apt-get install -y wget zip
+        - wget https://releases.hashicorp.com/terraform/0.13.2/terraform_0.13.2_linux_amd64.zip
+        - unzip terraform_0.13.2_linux_amd64.zip
+        - rm terraform_0.13.2_linux_amd64.zip
+        - sudo mv terraform /usr/local/bin/
+        # Install s3cmd
+        - sudo apt-get install -y s3cmd
+        # Install SSH
+        - sudo apt-get install -y openssh-client
+        # Install git
+        - sudo apt-get install -y git
+        # Put down credential files
+        - mkdir $HOME/.ssh && echo $SSH_PRIVATE_KEY > $HOME/.ssh/id_rsa
+        - printf "[backend]\naws_access_key_id=${AWS_ACCESS_KEY_ID}\naws_secret_access_key=${AWS_SECRET_ACCESS_KEY}\n" > credentials
+
+      addons:
+        apt:
+          update: true
+      script:
+        # Grab the version we're generating docs for
+        - export VERSION=$(cat package.json | jq -r '.version')
+        # Generate the documentation
+        - npm run docs
+        # Initialize Terraform
+        - terraform init -input=false ./terraform
+        # Make adjustments to infrastructure
+        - terraform plan -out=tfplan -input=false ./terraform
+        - terraform apply -input=false -auto-approve tfplan
+        # Upload documentation to bucket
+        - s3cmd --access_key $SITE_UPLOADER_ACCESS_KEY --secret_key $SITE_UPLOADER_SECRET_KEY sync docs/ s3://${SITE_BUCKET_NAME}/${VERSION}/

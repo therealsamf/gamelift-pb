@@ -1049,3 +1049,12 @@ docs/
 # Generated NYC output
 .nyc_output/
 coverage/
+
+# Generated terraform output
+.terraform
+
+# Terraform secrets
+terraform.tfvars
+
+# AWS Credentials
+credentials

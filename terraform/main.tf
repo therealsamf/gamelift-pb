@@ -6,9 +6,6 @@ terraform {
     region         = "us-east-1"
 
     dynamodb_table = "gamelift-pb-terraform"
-
-    profile                 = "backend"
-    shared_credentials_file = "credentials"
   }
 }
 

@@ -1,16 +1,14 @@
 
-node_js:
-  - 12
-
 jobs:
   include:
     - stage: default
       dist: bionic
       language: node_js
+      node_js:
+        - 12
       before_install:
         - sudo apt-get -y install apt-transport-https ca-certificates gnupg software-properties-common wget
-        - wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null |
-        gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
+        - wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
         - sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
         - sudo apt-get -y update
         - sudo apt-get -y install g++ cmake zlib1g-dev
@@ -40,24 +38,27 @@ jobs:
       if: tag IS present
       dist: bionic
       language: node_js
+      node_js:
+        - 12
       before_install:
         # Install JQ for JSON parsing
         - sudo apt-get install -y jq
         # Install terraform
         - sudo apt-get install -y wget zip
         - wget https://releases.hashicorp.com/terraform/0.13.2/terraform_0.13.2_linux_amd64.zip
-        - unzip terraform_0.13.2_linux_amd64.zip
+        - sudo unzip -d /usr/local/bin/ terraform_0.13.2_linux_amd64.zip
         - rm terraform_0.13.2_linux_amd64.zip
-        - sudo mv terraform /usr/local/bin/
         # Install s3cmd
         - sudo apt-get install -y s3cmd
+        # Install mime-support for proper Content-Type headers in S3
+        - sudo apt-get install -y mime-support
         # Install SSH
         - sudo apt-get install -y openssh-client
         # Install git
         - sudo apt-get install -y git
         # Put down credential files
-        - mkdir $HOME/.ssh && echo $SSH_PRIVATE_KEY > $HOME/.ssh/id_rsa
-        - printf "[backend]\naws_access_key_id=${AWS_ACCESS_KEY_ID}\naws_secret_access_key=${AWS_SECRET_ACCESS_KEY}\n" > credentials
+        - echo $SSH_PRIVATE_KEY | base64 --decode | openssl aes-256-cbc -K $encrypted_2fc69c4133c3_key -iv $encrypted_2fc69c4133c3_iv -out $HOME/.ssh/id_rsa -d
+        - chmod 600 $HOME/.ssh/id_rsa
 
       addons:
         apt:
@@ -73,4 +74,4 @@ jobs:
         - terraform plan -out=tfplan -input=false ./terraform
         - terraform apply -input=false -auto-approve tfplan
         # Upload documentation to bucket
-        - s3cmd --access_key $SITE_UPLOADER_ACCESS_KEY --secret_key $SITE_UPLOADER_SECRET_KEY sync docs/ s3://${SITE_BUCKET_NAME}/${VERSION}/
+        - s3cmd --access_key $SITE_UPLOADER_ACCESS_KEY --secret_key $SITE_UPLOADER_SECRET_KEY --guess-mime-type --no-mime-magic sync docs/ s3://${SITE_BUCKET_NAME}/${VERSION}/

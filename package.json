@@ -1,6 +1,6 @@
 {
   "name": "@kontest/gamelift-pb",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "NodeJS addon for Protocol Buffer objects used in AWS Gamelift",
   "main": "dist/index.js",
   "scripts": {

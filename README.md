@@ -25,7 +25,7 @@ The [AWS GameLift Server SDK](https://docs.aws.amazon.com/gamelift/latest/develo
  1. Create a [NodeJS C++ addon](https://nodejs.org/api/addons.html) with some "glue" using the [N-API](https://nodejs.org/api/addons.html#addons_n_api) to traverse the C++/NodeJS language barrier.
   * There are other ways of implementing the specifics of this; N-API isn't specifically required. But all such solutions would require native "glue" code between NodeJS and Protocol Buffer messages compiled by `protoc` so that they're usable from JavaScript.
  2. Recreate the message definitions in a way that NodeJS can use without touching native code.
-  * This could writing out the *.proto* files themselves and using `protoc` to generate NodeJS code, defining them with protobuf.js's reflection capability, or any other method for re-creating the messages in pure JavaScript.
+  * This could entail writing out the *.proto* files themselves and using `protoc` to generate NodeJS code, defining them with protobuf.js's reflection capability, or any other method for re-creating the messages in JavaScript.
 
 I chose (2) over (1) for the following reasons:
 

@@ -35,6 +35,8 @@ static const std::map<
         {"AttributeValue", &MessageFactory<AttributeValue>::create},
         {"BackfillMatchmakingRequest",
          &MessageFactory<BackfillMatchmakingRequest>::create},
+        {"BackfillMatchmakingResponse",
+         &MessageFactory<BackfillMatchmakingResponse>::create},
         {"DescribePlayerSessionsRequest",
          &MessageFactory<DescribePlayerSessionsRequest>::create},
         {"DescribePlayerSessionsResponse",

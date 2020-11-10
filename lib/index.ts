@@ -2,6 +2,7 @@ export { AcceptPlayerSession } from "./accept-player-session";
 export { ActivateGameSession } from "./activate-game-session";
 export { AttributeValue } from "./attribute-value";
 export { BackfillMatchmakingRequest } from "./backfill-matchmaking-request";
+export { BackfillMatchmakingResponse } from "./backfill-matchmaking-response";
 export { DescribePlayerSessionsRequest } from "./describe-player-sessions-request";
 export { DescribePlayerSessionsResponse } from "./describe-player-sessions-response";
 export { GameProperty } from "./game-property";

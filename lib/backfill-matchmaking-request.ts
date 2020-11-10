@@ -45,11 +45,13 @@ class BackfillMatchmakingRequest extends Message<BackfillMatchmakingRequest> {
    *
    * The matchmaker uses this information to search for new players who are
    * good matches for the current players. See the Amazon GameLift API
-   * Reference Guide for a description of the Player object format. To find
-   * player attributes, IDs, and team assignments, look in the game session
-   * object, in the matchmaker data property. If latency is used by the
-   * matchmaker, gather updated latency for the current region and include
-   * it in each player's data.
+   * Reference Guide for a description of the [Player object format]. To find
+   * player attributes, IDs, and team assignments, look in the
+   * {@link GameSession | game session} object, in the matchmaker data property. If
+   * latency is used by the matchmaker, gather updated latency for the current region
+   * and include it in each player's data.
+   *
+   * [Player object format]: https://docs.aws.amazon.com/gamelift/latest/apireference/API_Player.html
    */
   @Field.d(4, Player, "repeated")
   public players: Player[];

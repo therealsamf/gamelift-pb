@@ -33,7 +33,7 @@ I chose (2) over (1) for the following reasons:
  * Inline documentation & type safety: Using TypeScript is advantageous since [TypeDoc](https://typedoc.org/) can be used to easily generate documentation. Static type checking with TypeScript is also an advantage.
 
     * Native code could be written while getting the benefits of TypeScript with a [declaration file](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html). However, writing TypeScript in the first place reduces the amount of code to write.
- * Easier to extend: AWS GameLift SDK includes some model definitions which provides some helper methods on top of the fields already present in the Protocol Buffer messages. Using [protobuf.js decorator's capability](https://github.com/protobufjs/protobuf.js#using-decorators), the classes in this library fully implement GameLift's message defintiions while still being as extendable as any class in JavaScript.
+ * Easier to extend: AWS GameLift SDK includes some model definitions which provides some helper methods on top of the fields already present in the Protocol Buffer messages. Using [protobuf.js decorator's capability](https://github.com/protobufjs/protobuf.js#using-decorators), the classes in this library fully implement GameLift's message definitions while still being as extendable as any class in JavaScript.
 
 ## Contributing
 

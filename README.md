@@ -10,6 +10,8 @@ gamelift-pb
 
 This library enables communication between a NodeJS process and the AWS GameLift service.
 
+[API Documentation](https://docs.kontest.io/gamelift-pb/latest/index.html)
+
 # Getting Started
 
 These message definitions aren't meant to be used directly. Head over to [`@kontest/gamelift`](https://github.com/therealsamf/gamelift) for a guide and examples on how to get started with a NodeJS server running on AWS GameLift.

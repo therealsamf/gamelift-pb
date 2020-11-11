@@ -75,7 +75,6 @@ std::string GetResult(Napi::Env& env, const std::string& type_name,
  * @param info NodeJS callback information.
  */
 Napi::Value CheckMessageWireFormat(const Napi::CallbackInfo& info) {
-
   std::srand(time(nullptr));
 
   Napi::Env env = info.Env();
@@ -221,7 +220,7 @@ bool CheckMessageFields(Napi::Env& env,
   random_integer_64 = std::bind(RandomInt64Factory::GenerateRandomValue, env,
                                 random_object, std::placeholders::_1);
   random_double = std::bind(RandomDoubleFactory::GenerateRandomValue, env,
-                                random_object, std::placeholders::_1);
+                            random_object, std::placeholders::_1);
   random_string = std::bind(RandomStringFactory::GenerateRandomValue, env,
                             random_object, std::placeholders::_1);
 
@@ -266,7 +265,8 @@ bool CheckMessageFields(Napi::Env& env,
       std::string json_string;
       google::protobuf::util::JsonPrintOptions print_options;
       print_options.always_print_enums_as_ints = true;
-      if (!google::protobuf::util::MessageToJsonString(*message, &json_string, print_options)
+      if (!google::protobuf::util::MessageToJsonString(*message, &json_string,
+                                                       print_options)
                .ok()) {
         Napi::Error::New(env,
                          "Failed to serialize Protocol Buffer to JSON string")
@@ -312,18 +312,20 @@ bool CheckMessageFields(Napi::Env& env,
 
         std::string nodejs_message;
 
-        if (!message_copy->ParseFromString(js_result) || !google::protobuf::util::MessageToJsonString(*message_copy, &nodejs_message).ok()) {
+        if (!message_copy->ParseFromString(js_result) ||
+            !google::protobuf::util::MessageToJsonString(*message_copy,
+                                                         &nodejs_message)
+                 .ok()) {
           std::cerr << "Failed to parse JavaScript result" << std::endl;
           for_real = true;
         } else {
-
           google::protobuf::util::MessageDifferencer differencer;
           std::string difference_string;
           differencer.ReportDifferencesToString(&difference_string);
-          differencer.set_message_field_comparison(google::protobuf::util::MessageDifferencer::EQUIVALENT);
+          differencer.set_message_field_comparison(
+              google::protobuf::util::MessageDifferencer::EQUIVALENT);
 
-          if (!differencer.Compare(
-                  *message, *message_copy)) {
+          if (!differencer.Compare(*message, *message_copy)) {
             std::cerr << "Differences: " << difference_string << std::endl;
             for_real = true;
           }

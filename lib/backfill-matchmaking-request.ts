@@ -54,7 +54,7 @@ class BackfillMatchmakingRequest extends Message<BackfillMatchmakingRequest> {
    * [Player object format]: https://docs.aws.amazon.com/gamelift/latest/apireference/API_Player.html
    */
   @Field.d(4, Player, "repeated")
-  public players: Player[];
+  public players: Omit<Player, "$type" | "toJSON">[];
 
   /**
    * Unique identifier for a matchmaking or match backfill request ticket.

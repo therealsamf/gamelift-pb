@@ -15,7 +15,7 @@ class Player extends Message<Player> {
    * Unique ID for the player
    */
   @Field.d(1, "string")
-  public playerId: string;
+  public playerId?: string;
 
   /**
    * A collection of key:value pairs containing player information for use
@@ -27,11 +27,16 @@ class Player extends Message<Player> {
    * Example:
    *
    * ```
-   * "PlayerAttributes": { "skill": { "n": 23 }, "gameMode": { "s": "deathmatch" } }
+   * "PlayerAttributes": {
+   *  skill: { N: 23, type: AttributeValue.DOUBLE },
+   *  gameMode: { S: "deathmatch", type: AttributeValue.STRING },
+   * }
    * ```
    */
   @MapField.d(2, "string", AttributeValue)
-  public playerAttributes: { [key: string]: AttributeValue };
+  public playerAttributes?: {
+    [key: string]: Omit<AttributeValue, "$type" | "toJSON">;
+  };
 
   /**
    * Name of team that the player is assigned to in a match.
@@ -39,7 +44,7 @@ class Player extends Message<Player> {
    * Team names are defined in a matchmaking rule set.
    */
   @Field.d(3, "string")
-  public team: string;
+  public team?: string;
 
   /**
    * Set of values, expressed in milliseconds, indicating the amount of
@@ -54,7 +59,7 @@ class Player extends Message<Player> {
    * player and the ticket is not matchable.
    */
   @MapField.d(4, "string", "int32")
-  public latencyInMs: { [region: string]: number };
+  public latencyInMs?: { [region: string]: number };
 }
 
 pbufferNamespace.add(Player.$type);

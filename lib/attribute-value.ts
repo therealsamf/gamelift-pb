@@ -11,7 +11,38 @@ import { pbufferNamespace } from "./namespace";
  *
  */
 class AttributeValue extends Message<AttributeValue> {
-  /** @hidden */
+  /**
+   * Defines `NONE` type for {@link type} field.
+   */
+  public static readonly NONE = 0;
+
+  /**
+   * Defines `STRING` type for {@link type} field.
+   */
+  public static readonly STRING = 1;
+
+  /**
+   * Defines `DOUBLE` type for {@link type} field.
+   */
+  public static readonly DOUBLE = 2;
+
+  /**
+   * Defines `STRING_LIST` type for {@link type} field.
+   */
+  public static readonly STRING_LIST = 3;
+
+  /**
+   * Defines `STRING_DOUBLE_MAP` type for {@link type} field.
+   */
+  public static readonly STRING_DOUBLE_MAP = 4;
+
+  /**
+   * "Enumeration" that determines the type of attribute value.
+   *
+   * This isn't a true Protocol Buffer enumeration, just an integer that specifies
+   * {@link NONE}, {@link STRING}, {@link DOUBLE}, {@link STRING_LIST}, or
+   * {@link STRING_DOUBLE_MAP}.
+   */
   @Field.d(1, "int32")
   public type: number;
 
@@ -21,13 +52,13 @@ class AttributeValue extends Message<AttributeValue> {
    * Maximum string length is 100 characters.
    */
   @Field.d(2, "string")
-  public S: number;
+  public S?: number;
 
   /**
    * For number values, expressed as double.
    */
   @Field.d(3, "double")
-  public N: number;
+  public N?: number;
 
   /**
    * For a list of up to 10 strings.
@@ -37,7 +68,7 @@ class AttributeValue extends Message<AttributeValue> {
    * a repeated value are ignored.
    */
   @Field.d(4, "string", "repeated")
-  public SL: string[];
+  public SL?: string[];
 
   /**
    * For a map of up to 10 data string:double pairs.
@@ -45,7 +76,7 @@ class AttributeValue extends Message<AttributeValue> {
    * Maximum length for each string value is 100 characters.
    */
   @MapField.d(5, "string", "double")
-  public SDM: { [key: string]: number };
+  public SDM?: { [key: string]: number };
 }
 
 pbufferNamespace.add(AttributeValue.$type);

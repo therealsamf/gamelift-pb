@@ -35,7 +35,7 @@
   "author": "therealsamf",
   "license": "MIT",
   "dependencies": {
-    "@types/node": "^14.14.0",
+    "@types/node": "^14.14.2",
     "protobufjs": "^6.10.1"
   },
   "files": [
